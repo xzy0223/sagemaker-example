@@ -49,9 +49,6 @@ def norm_transform(data_source_url, data_output_url):
     # 通过outer join的方式将两组dataframe在列的方向进行合并，并删除不在需要的id
     target_train_data_frame = source_label_data_frame.join(source_feature_data_frame, "id", "outer").drop("id")
 
-    # 如果想存储的数据只生成一个文件，那么可以repartition为1
-    #target_train_data_frame = target_train_data_frame.repartition(1)
-    
     # 存储数据到S3
     target_train_data_frame.write.save(
         data_output_url, 
